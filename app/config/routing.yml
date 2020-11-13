@@ -5,3 +5,8 @@ event:
 app:
     resource: @AppBundle/Controller/
     type:     annotation
+
+user_controller:
+    resource: "@UserBundle/Controller"
+    prefix:   /
+    type:     annotation
