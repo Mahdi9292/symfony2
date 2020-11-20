@@ -11,31 +11,39 @@ security:
             memory:
                 users:
                     ryan:
-                        password: ryanpass
+                        password: 1234
                         roles: 'ROLE_USER'
                     admin:
-                        password: kitten
+                        password: 12345
                         roles: 'ROLE_ADMIN'
     firewalls:
-#        login_firewall:
-#            pattern:   ^/login$
-#            anonymous: ~
-#        secured_area:
-#            pattern:    ^/
-#            form_login: ~
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
-        default:
-            anonymous: ~
-            http_basic: ~
+        secured_area:
+            pattern:    ^/
             form_login:
                 login_path: /login
                 check_path: /login_check
+            logout:
+                path:   /logout
+                target: /event
+            anonymous: ~ # this lets ananymous users in to the site (login page )
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000 # 365 days in seconds
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
+
+
 
     access_control:
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # require ROLE_ADMIN for /admin*
-        - { path: ^/, roles: ROLE_ADMIN }
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - {path: ^/hadi, roles: ROLE_USER}
+        - {path: ^/event, roles: ROLE_USER}
+
+
+############ Notes
+#1- firewall is just to define who you are not deny access
+#2- deny access is just done by access_control

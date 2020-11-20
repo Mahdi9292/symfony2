@@ -30,6 +30,13 @@ class DefaultController extends Controller
      */
     public function hadiAction()
     {
-
+        $hello = "hello hadi jan";
+        return $this->render(
+            'UserBundle:Default:hadi.html.twig',
+            array(
+                // last username entered by the user
+                'hello' => $hello,
+            )
+        );;
     }
 }

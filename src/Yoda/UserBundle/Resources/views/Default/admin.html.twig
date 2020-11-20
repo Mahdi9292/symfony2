@@ -2,4 +2,8 @@
 
 {% block body %}
 {{ last_username }}
+
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a href="{{ path('logout') }}">LOG OUT</a>
+    {% endif %}
 {% endblock %}
